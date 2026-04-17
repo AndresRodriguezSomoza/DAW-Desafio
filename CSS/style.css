@@ -1,0 +1,40 @@
+
+body {
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-principal {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+
+.card-resumen { border: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); } 
+
+.card-balance { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; } 
+
+
+.card-ingresos { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; } 
+
+.card-egresos { background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%); color: white; } 
+
+.monto-grande { font-size: 2.5rem; font-weight: bold; } .form-section { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 2rem; } 
+
+
+.nav-tabs .nav-link { border: none; color: #495057; font-weight: 600; } 
+
+.nav-tabs.nav-link.active { color: #667eea; border-bottom: 3px solid #667eea; } 
+
+.transaccion-item { background: white; border-left: 4px solid #667eea; padding: 1rem; margin-bottom: 0.5rem; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); } 
+
+
+.transaccion-egreso { border-left-color: #eb3349; } 
+
+.porcentaje-badge { font-size: 0.9rem; padding: 0.5rem 0.8rem; } 
+
+.btn-agregar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; padding: 0.5rem 2rem; } 
+
+.btn-agregar:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); color: white; }
