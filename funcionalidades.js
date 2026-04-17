@@ -1,4 +1,11 @@
-let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+let transactions = [];
+
+try {
+    transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+} catch (error) {
+    transactions = [];
+}
+
 
 function escapeHtml(texto) {
     if (!texto) return '';
@@ -14,6 +21,49 @@ const form = document.getElementById('formulario-transaccion');
 const transactionsType = document.getElementById('tipo-transaccion');
 const inputDescription = document.getElementById('descripcion');
 const inputAmount = document.getElementById('monto');
+
+//Validaciones personalizadas
+
+//Transaccion
+transactionsType.addEventListener('invalid', function(){
+    if(this.value === ''){
+        this.setCustomValidity('Debes seleccionar un tipo de transaccion');
+    }
+});
+
+transactionsType.addEventListener('input', function(){
+    this.setCustomValidity('');
+})
+
+//Descripcion, tambien evita el ingreso de simbolos, solamente se exluyen <>, ; y / \
+
+inputDescription.addEventListener('input', function () {
+    const regex = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s\-\(\),.'""]*$/;
+
+    if (!this.value.trim()) {
+        this.setCustomValidity('La descripción no puede estar vacía');
+    } else if (!regex.test(this.value)) {
+        this.setCustomValidity('Solo se permiten letras y números');
+    } else {
+        this.setCustomValidity('');
+    }
+});
+
+//Monto
+
+inputAmount.addEventListener('invalid', function (){
+    if (!this.value){
+        this.setCustomValidity('El monto es Obligatorio');
+    } else if (this.value <= 0) {
+        this.setCustomValidity('El monto no puede ser 0');
+    }
+});
+
+inputAmount.addEventListener('input', function (){
+    this.setCustomValidity('');
+});
+
+
 
 const totalBalanceSpan = document.getElementById('balance-total');
 const totalEarningsSpan = document.getElementById('total-ingresos');
@@ -53,6 +103,8 @@ function updateInterface(){
     updateExpensesList();
 }
 
+//Ingresos
+
 function updateEarningsList() {
     const earnings = transactions.filter(trans => trans.tipo === 'Ingreso');
     
@@ -78,6 +130,8 @@ function updateEarningsList() {
 
     divEarningsList.innerHTML = html;
 }
+
+//Egresos
 
 function updateExpensesList() {
     const expenses = transactions.filter(trans => trans.tipo === 'Egreso');
@@ -124,6 +178,7 @@ function newTransaction(event){
     const description = inputDescription.value.trim();
     const amount = parseFloat(inputAmount.value);
 
+
     const newTransaction = {
         id: Date.now(),
         tipo: type,
@@ -133,6 +188,7 @@ function newTransaction(event){
     };
 
     transactions.push(newTransaction);
+    localStorage.setItem('transactions', JSON.stringify(transactions)); //Guardar datos
 
     transactionsType.value = '';
     inputDescription.value = '';
@@ -142,3 +198,5 @@ function newTransaction(event){
 }
 
 form.addEventListener('submit', newTransaction);
+//cargar datos
+updateInterface();
