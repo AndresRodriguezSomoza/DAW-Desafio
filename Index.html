@@ -23,45 +23,32 @@
     <div class="container">
         
         <!-- ==================== RESUMEN DE PRESUPUESTO ==================== -->
-        <div class="row mb-4">
-            <!-- Balance Total -->
-            <div class="col-md-4 mb-3">
-                <div class="card card-resumen card-balance text-center p-3">
-                    <h5 class="mb-2">Total Disponible</h5>
-                    <div class="monto-grande" id="balance-total">+ 0.00</div>
-                    <small>Saldo del mes</small>
-                </div>
+       
+        <!-- Porcentaje de Gastos -->
+        <div class="contenedor-principal">
+    <div class="card-principal">
+
+        <div class="total-balance text-success" id="balance-total">
+            + 0.00
+        </div>
+
+        <div class="caja-resumen">
+            <div class="ingresos-box">
+                INGRESOS: <span id="total-ingresos">+0.00</span>
             </div>
-            
-            <!-- Total Ingresos -->
-            <div class="col-md-4 mb-3">
-                <div class="card card-resumen card-ingresos text-center p-3">
-                    <h5 class="mb-2">Ingresos</h5>
-                    <div class="monto-grande" id="total-ingresos">+ 0.00</div>
-                    <small>Total ganado</small>
-                </div>
-            </div>
-            
-            <!-- Total Egresos -->
-            <div class="col-md-4 mb-3">
-                <div class="card card-resumen card-egresos text-center p-3">
-                    <h5 class="mb-2">Egresos</h5>
-                    <div class="monto-grande" id="total-egresos">- 0.00</div>
-                    <small>Total gastado</small>
-                </div>
+
+            <div class="egresos-box">
+                EGRESOS: <span id="total-egresos">-0.00</span>
             </div>
         </div>
 
-        <!-- Porcentaje de Gastos -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="alert alert-info text-center" role="alert">
-                    <strong>Porcentaje de gastos:</strong> 
-                    <span id="porcentaje-gastos" class="font-weight-bold">0%</span> 
-                    del total de ingresos
-                </div>
-            </div>
+        <div class="porcentaje">
+            Porcentaje de gastos:
+            <span id="porcentaje-gastos">0%</span>
         </div>
+
+    </div>
+</div>
 
 
         <div class="form-section">
