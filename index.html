@@ -1,146 +1,171 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Presupuesto Personal</title>
-    
+
     <!-- Bootstrap 4 CSS -->
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
-
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="CSS/style.css" />
+  </head>
+  <body>
+    <div id="toast-container"></div>
 
     <div class="header-principal text-center">
-        <div class="container">
-            <h1 id="titulo-mes">Presupuesto de [MES AÑO]</h1>
-            <p class="mb-0">Universidad Don Bosco - Experiencia de Aprendizaje 4</p>
-        </div>
+      <div class="container">
+        <h1 id="titulo-mes">Presupuesto de [MES AÑO]</h1>
+        <p class="mb-0">Universidad Don Bosco - Experiencia de Aprendizaje 4</p>
+      </div>
     </div>
 
     <div class="container">
-        
-        <!-- ==================== RESUMEN DE PRESUPUESTO ==================== -->
-       
-        <!-- Porcentaje de Gastos -->
-        <div class="contenedor-principal">
-    <div class="card-principal">
+      <!-- ==================== RESUMEN DE PRESUPUESTO ==================== -->
 
-        <div class="total-balance text-success" id="balance-total">
+      <!-- Porcentaje de Gastos -->
+      <div class="contenedor-principal">
+        <div class="card-principal">
+          <div class="total-balance text-success" id="balance-total">
             + 0.00
-        </div>
+          </div>
 
-        <div class="caja-resumen">
+          <div class="caja-resumen">
             <div class="ingresos-box">
-                INGRESOS: <span id="total-ingresos">+0.00</span>
+              INGRESOS: <span id="total-ingresos">+0.00</span>
             </div>
 
             <div class="egresos-box">
-                EGRESOS: <span id="total-egresos">-0.00</span>
+              EGRESOS: <span id="total-egresos">-0.00</span>
             </div>
-        </div>
+          </div>
 
-        <div class="porcentaje">
+          <div class="porcentaje">
             Porcentaje de gastos:
             <span id="porcentaje-gastos">0%</span>
+          </div>
         </div>
+      </div>
 
-    </div>
-</div>
+      <div class="form-section">
+        <h3 class="mb-4 text-center">Nueva Transacción</h3>
 
-
-        <div class="form-section">
-            <h3 class="mb-4 text-center">Nueva Transacción</h3>
-            
-            <form id="formulario-transaccion">
-                <div class="form-row">
-                    <!-- Tipo de Transacción (Dropdown) -->
-                    <div class="form-group col-md-4">
-                        <label for="tipo-transaccion">Tipo de Transacción</label>
-                        <select class="form-control" id="tipo-transaccion" required>
-                            <option value="" selected disabled>Seleccione...</option>
-                            <option value="Ingreso">Ingreso</option>
-                            <option value="Egreso">Egreso</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Descripción -->
-                    <div class="form-group col-md-5">
-                        <label for="descripcion">Descripción</label>
-                        <input type="text" class="form-control" id="descripcion" 
-                               placeholder="Ej: Salario, Supermercado, Luz..." required>
-                    </div>
-                    
-                    <!-- Monto -->
-                    <div class="form-group col-md-3">
-                        <label for="monto">Monto ($)</label>
-                        <input type="number" class="form-control" id="monto" 
-                               placeholder="0.00" step="0.01" min="0.01" required> <!--El min ahora queda en 0.01 para que no deje agregar 0 como monto-->
-                    </div>
-                </div>
-                
-                <!-- Botón Agregar -->
-                <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-agregar btn-lg">
-                        <i class="fas fa-plus"></i> Agregar Transacción
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <div class="form-section">
-            <h3 class="mb-4 text-center">Detalle de Transacciones</h3>
-            
-            <!-- Pestañas (Tabs) -->
-            <ul class="nav nav-tabs mb-4" id="tabs-transacciones" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="tab-ingresos" data-toggle="tab" 
-                       href="#contenido-ingresos" role="tab">
-                        Ingresos
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="tab-egresos" data-toggle="tab" 
-                       href="#contenido-egresos" role="tab">
-                        Egresos
-                    </a>
-                </li>
-            </ul>
-            
-            <!-- Contenido de las Pestañas -->
-            <div class="tab-content" id="contenido-tabs">
-                
-                <!-- Pestaña de Ingresos -->
-                <div class="tab-pane fade show active" id="contenido-ingresos" role="tabpanel">
-                    <div id="lista-ingresos">
-                        <p class="text-center text-muted py-4">
-                            No hay ingresos registrados. ¡Agrega la primera transacción!
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Pestaña de Egresos -->
-                <div class="tab-pane fade" id="contenido-egresos" role="tabpanel">
-                    <div id="lista-egresos">
-                        <p class="text-center text-muted py-4">
-                            No hay egresos registrados.
-                        </p>
-                    </div>
-                </div>
-                
+        <form id="formulario-transaccion">
+          <div class="form-row">
+            <!-- Tipo de Transacción (Dropdown) -->
+            <div class="form-group col-md-4">
+              <label for="tipo-transaccion">Tipo de Transacción</label>
+              <select class="form-control" id="tipo-transaccion" required>
+                <option value="" selected disabled>Seleccione...</option>
+                <option value="Ingreso">Ingreso</option>
+                <option value="Egreso">Egreso</option>
+              </select>
             </div>
-        </div>
 
+            <!-- Descripción -->
+            <div class="form-group col-md-5">
+              <label for="descripcion">Descripción</label>
+              <input
+                type="text"
+                class="form-control"
+                id="descripcion"
+                placeholder="Ej: Salario, Supermercado, Luz..."
+                required
+              />
+            </div>
+
+            <!-- Monto -->
+            <div class="form-group col-md-3">
+              <label for="monto">Monto ($)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="monto"
+                placeholder="0.00"
+                step="0.01"
+                min="0.01"
+                required
+              />
+              <!--El min ahora queda en 0.01 para que no deje agregar 0 como monto-->
+            </div>
+          </div>
+
+          <!-- Botón Agregar -->
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-agregar btn-lg">
+              <i class="fas fa-plus"></i> Agregar Transacción
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-section">
+        <h3 class="mb-4 text-center">Detalle de Transacciones</h3>
+
+        <!-- Pestañas (Tabs) -->
+        <ul class="nav nav-tabs mb-4" id="tabs-transacciones" role="tablist">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              id="tab-ingresos"
+              data-toggle="tab"
+              href="#contenido-ingresos"
+              role="tab"
+            >
+              Ingresos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="tab-egresos"
+              data-toggle="tab"
+              href="#contenido-egresos"
+              role="tab"
+            >
+              Egresos
+            </a>
+          </li>
+        </ul>
+
+        <!-- Contenido de las Pestañas -->
+        <div class="tab-content" id="contenido-tabs">
+          <!-- Pestaña de Ingresos -->
+          <div
+            class="tab-pane fade show active"
+            id="contenido-ingresos"
+            role="tabpanel"
+          >
+            <div id="lista-ingresos">
+              <p class="text-center text-muted py-4">
+                No hay ingresos registrados. ¡Agrega la primera transacción!
+              </p>
+            </div>
+          </div>
+
+          <!-- Pestaña de Egresos -->
+          <div class="tab-pane fade" id="contenido-egresos" role="tabpanel">
+            <div id="lista-egresos">
+              <p class="text-center text-muted py-4">
+                No hay egresos registrados.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Footer -->
     <footer class="text-center py-4 mt-5 text-muted">
-        <small>Desarrollo de Aplicaciones Web con Software Interpretado en el Cliente [DAW901]</small><br>
-        <small>Universidad Don Bosco, El Salvador</small>
+      <small
+        >Desarrollo de Aplicaciones Web con Software Interpretado en el Cliente
+        [DAW901]</small
+      ><br />
+      <small>Universidad Don Bosco, El Salvador</small>
     </footer>
-
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Bootstrap JS -->
@@ -149,11 +174,11 @@
     <script src="funcionalidades.js"></script>
 
     <script>
-
-    const fecha = new Date();
-    const opciones = { year: 'numeric', month: 'long' };
-    // Busca el título por su ID y cambia el texto
-    document.getElementById('titulo-mes').textContent = "Presupuesto de " + fecha.toLocaleDateString('es-ES', opciones);
-</script>
-</body>
+      const fecha = new Date();
+      const opciones = { year: "numeric", month: "long" };
+      // Busca el título por su ID y cambia el texto
+      document.getElementById("titulo-mes").textContent =
+        "Presupuesto de " + fecha.toLocaleDateString("es-ES", opciones);
+    </script>
+  </body>
 </html>

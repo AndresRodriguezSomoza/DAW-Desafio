@@ -6,6 +6,25 @@ try {
     transactions = [];
 }
 
+function showNotification(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    
+    toast.innerHTML = `
+        <span style="flex-grow: 1;">${message}</span>
+        <span style="cursor:pointer; font-weight:bold; opacity:0.5" onclick="this.parentElement.remove()">×</span>
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 400);
+    }, 3500);
+}
 
 function escapeHtml(texto) {
     if (!texto) return '';
@@ -22,9 +41,7 @@ const transactionsType = document.getElementById('tipo-transaccion');
 const inputDescription = document.getElementById('descripcion');
 const inputAmount = document.getElementById('monto');
 
-//Validaciones personalizadas
-
-//Transaccion
+// Validaciones personalizadas
 transactionsType.addEventListener('invalid', function(){
     if(this.value === ''){
         this.setCustomValidity('Debes seleccionar un tipo de transaccion');
@@ -33,9 +50,7 @@ transactionsType.addEventListener('invalid', function(){
 
 transactionsType.addEventListener('input', function(){
     this.setCustomValidity('');
-})
-
-//Descripcion, tambien evita el ingreso de simbolos, solamente se exluyen <>, ; y / \
+});
 
 inputDescription.addEventListener('input', function () {
     const regex = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s\-\(\),.'""]*$/;
@@ -49,8 +64,6 @@ inputDescription.addEventListener('input', function () {
     }
 });
 
-//Monto
-
 inputAmount.addEventListener('invalid', function (){
     if (!this.value){
         this.setCustomValidity('El monto es Obligatorio');
@@ -63,8 +76,6 @@ inputAmount.addEventListener('input', function (){
     this.setCustomValidity('');
 });
 
-
-
 const totalBalanceSpan = document.getElementById('balance-total');
 const totalEarningsSpan = document.getElementById('total-ingresos');
 const totalExpensesSpan = document.getElementById('total-egresos');
@@ -73,7 +84,6 @@ const rateSpendingSpan = document.getElementById('porcentaje-gastos');
 const divEarningsList = document.getElementById('lista-ingresos');
 const divExpensesList = document.getElementById('lista-egresos');
 
-// Actualizar listas y los resumenes
 function updateInterface(){
     let totalEarnings = 0;
     let totalExpenses = 0;
@@ -99,13 +109,11 @@ function updateInterface(){
 
     rateSpendingSpan.textContent = `${rateExpenses.toFixed(2)}%`;
 
-    updateEarningsList();
-    updateExpensesList();
+    updateEarningsList(totalEarnings);
+    updateExpensesList(totalEarnings);
 }
 
-//Ingresos
-
-function updateEarningsList() {
+function updateEarningsList(totalEarnings) {
     const earnings = transactions.filter(trans => trans.tipo === 'Ingreso');
     
     if (earnings.length === 0) {
@@ -114,7 +122,6 @@ function updateEarningsList() {
     }
     
     let html = '';
-
     earnings.forEach(earning => {
         html += `
             <div class="transaccion-item">
@@ -127,21 +134,11 @@ function updateEarningsList() {
             </div>
         `;
     });
-
     divEarningsList.innerHTML = html;
 }
 
-//Egresos
-
-function updateExpensesList() {
+function updateExpensesList(totalEarnings) {
     const expenses = transactions.filter(trans => trans.tipo === 'Egreso');
-    
-    let totalEarnings = 0;
-    transactions.forEach(trans => {
-        if (trans.tipo === 'Ingreso') {
-            totalEarnings += trans.monto;
-        }
-    });
     
     if (expenses.length === 0) {
         divExpensesList.innerHTML = '<p class="text-center text-muted py-4">No hay egresos registrados.</p>';
@@ -178,8 +175,22 @@ function newTransaction(event){
     const description = inputDescription.value.trim();
     const amount = parseFloat(inputAmount.value);
 
+    if (!type) {
+        showNotification('Selecciona un tipo de transacción', 'error');
+        return;
+    }
+    
+    if (!description) {
+        showNotification('La descripción no puede estar vacía', 'error');
+        return;
+    }
+    
+    if (isNaN(amount) || amount <= 0) {
+        showNotification('El monto debe ser mayor a 0', 'error');
+        return;
+    }
 
-    const newTransaction = {
+    const newTransactionObj = {
         id: Date.now(),
         tipo: type,
         descripcion: description,
@@ -187,16 +198,17 @@ function newTransaction(event){
         date: new Date()
     };
 
-    transactions.push(newTransaction);
-    localStorage.setItem('transactions', JSON.stringify(transactions)); //Guardar datos
+    transactions.push(newTransactionObj);
+    localStorage.setItem('transactions', JSON.stringify(transactions));
 
     transactionsType.value = '';
     inputDescription.value = '';
     inputAmount.value = '';
 
+    showNotification(`¡${type} agregado con éxito!`, 'success');
+    
     updateInterface();
 }
 
 form.addEventListener('submit', newTransaction);
-//cargar datos
 updateInterface();
